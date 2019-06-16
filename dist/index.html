@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hexbot Starter</title>
+    <script type="text/javascript" src="https://github.com/github/fetch/releases/download/v3.0.0/fetch.umd.js"></script>
+    <script src="noopbots.js"></script>
+    <script src="app.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      #timer {
+        justify-content: center;
+        text-align: center;
+        min-height: 90vh;
+      }
+      #colorHex{
+        border: 1px solid;
+        width: 17%;
+        margin-left: auto;
+      }
+      .basic {
+        align-items: center;
+        font-family: 'Beuhaus 93', Courier, monospace;
+        font-size: 3rem;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="basic" id="timer"></div>
+    <div class="basic" id="colorHex"></div>
+  </body>
+</html>
