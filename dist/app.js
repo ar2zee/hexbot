@@ -15,7 +15,7 @@ function draw() {
       setInterval(() => {
         const randomColor = arrayOfClors[Math.floor(Math.random()*arrayOfClors.length)];
         const dateObject = new Date();
-        const timeString = `${dateObject.getHours()}:${dateObject.getMinutes()}:${dateObject.getSeconds()}`;
+        const timeString = `${dateObject.getHours()}<span class="blink_me">:</span>${dateObject.getMinutes()}<span class="blink_me">:</span>${dateObject.getSeconds()}`;
         document.querySelector('html').style.backgroundColor = randomColor;
         document.querySelector('#timer').innerHTML = timeString;
         document.querySelector('#colorHex').innerHTML = randomColor;

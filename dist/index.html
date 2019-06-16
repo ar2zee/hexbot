@@ -10,28 +10,35 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        font-family: 'Cooper Black', Courier, monospace;
       }
       #timer {
         justify-content: center;
-        text-align: center;
-        min-height: 90vh;
+        min-height: 85vh;
+        align-items: center;
+        display: flex;
+        font-size: 5rem;
       }
       #colorHex{
         border: 1px solid;
-        width: 17%;
-        margin-left: auto;
-      }
-      .basic {
-        align-items: center;
-        font-family: 'Beuhaus 93', Courier, monospace;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        padding: 1rem;
         font-size: 3rem;
-        display: flex;
-        flex-direction: column;
       }
+      .blink_me {
+        animation: blinker 1s linear infinite;
+      }
+      @keyframes blinker {
+      95% {
+        opacity: 0;
+      }
+    }
     </style>
   </head>
   <body>
-    <div class="basic" id="timer"></div>
-    <div class="basic" id="colorHex"></div>
+    <div id="timer"></div>
+    <div id="colorHex"></div>
   </body>
 </html>
