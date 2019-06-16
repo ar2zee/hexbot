@@ -3,8 +3,8 @@ function start_app () {
     draw();
 };
 
-function draw() {
-    NOOPBOT_FETCH({
+async function draw ()  {
+    await  NOOPBOT_FETCH({
       API: 'hexbot',
       count: 1000
     }, drawSet);
@@ -12,13 +12,15 @@ function draw() {
 
   function drawSet (response) {
       const arrayOfClors  = response.colors.map(el => el.value);
+      document.querySelector('#timer').innerHTML = 'Loading...';
       setInterval(() => {
-        const randomColor = arrayOfClors[Math.floor(Math.random()*arrayOfClors.length)];
         const dateObject = new Date();
+        const randomColor = arrayOfClors[Math.floor(Math.random()*arrayOfClors.length)];
         const timeString = `${dateObject.getHours()}<span class="blink_me">:</span>${dateObject.getMinutes()}<span class="blink_me">:</span>${dateObject.getSeconds()}`;
         document.querySelector('html').style.backgroundColor = randomColor;
-        document.querySelector('#timer').innerHTML = timeString;
         document.querySelector('#colorHex').innerHTML = randomColor;
+        document.querySelector('#timer').innerHTML = timeString;
+        document.title = `🤖 ${dateObject.getHours()}:${dateObject.getMinutes()}:${dateObject.getSeconds()} | ${randomColor} 🤖`;
         document.querySelector('#timer').style.color = invertHex(randomColor);
         document.querySelector('#colorHex').style.color = invertHex(randomColor);
         document.querySelector('#colorHex').style.borderColor = invertHex(randomColor);
