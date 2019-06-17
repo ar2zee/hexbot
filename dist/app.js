@@ -1,34 +1,41 @@
-
 function start_app () {
-    draw();
+  draw();
 };
 
-async function draw ()  {
-    await  NOOPBOT_FETCH({
+const draw = () => {
+  const arrayOfColors = [];
+  for(let i = 0; i <= 200; i++){
+    NOOPBOT_FETCH({
       API: 'hexbot',
       count: 1000
-    }, drawSet);
+    }, (response) => {
+      arrayOfColors.push(response)
+      if(i === 200){
+        drawSet(arrayOfColors)
+      }
+      return;
+    });
   }
+}
 
-  function drawSet (response) {
-      const arrayOfClors  = response.colors.map(el => el.value);
-      document.querySelector('#timer').innerHTML = 'Loading...';
-      setInterval(() => {
-        const dateObject = new Date();
-        const randomColor = arrayOfClors[Math.floor(Math.random()*arrayOfClors.length)];
-        const timeString = `${dateObject.getHours()}<span class="blink_me">:</span>${dateObject.getMinutes()}<span class="blink_me">:</span>${dateObject.getSeconds()}`;
-        document.querySelector('html').style.backgroundColor = randomColor;
-        document.querySelector('#colorHex').innerHTML = randomColor;
-        document.querySelector('#timer').innerHTML = timeString;
-        document.title = `🤖 ${dateObject.getHours()}:${dateObject.getMinutes()}:${dateObject.getSeconds()} | ${randomColor} 🤖`;
-        document.querySelector('#timer').style.color = invertHex(randomColor);
-        document.querySelector('#colorHex').style.color = invertHex(randomColor);
-        document.querySelector('#colorHex').style.borderColor = invertHex(randomColor);
-      }, 1000);
-  }
+const drawSet = response => {
+  const arrayOfColors  = [...new Set(response.map(color => color.colors).flat(2).map(el => el.value))];
+  setInterval(() => {
+    const dateObject = new Date();
+    const randomColor = arrayOfColors[Math.floor(Math.random()*arrayOfColors.length)];
+    document.title = `${dateObject.getHours()}:${dateObject.getMinutes()}:${dateObject.getSeconds()} | ${randomColor}`;
+    const timeString = `${dateObject.getHours()}<span class="blink_me">:</span>${dateObject.getMinutes()}<span class="blink_me">:</span>${dateObject.getSeconds()}`;
+    document.querySelector('html').style.backgroundColor = randomColor;
+    document.querySelector('#timer').innerHTML = timeString;
+    document.querySelector('#timer').style.color = invertHex(randomColor);
+    document.querySelector('#colorHex').innerHTML = randomColor;
+    document.querySelector('#colorHex').style.color = invertHex(randomColor);
+    document.querySelector('#colorHex').style.borderColor = invertHex(randomColor);
+  }, 1000);
+}
 
-  function invertHex(hex) {
-    const removeHash = hex.split('').splice(1).join('')
-    const result = (Number(`0x1${removeHash}`) ^ 0xFFFFFF).toString(16).substr(1).toUpperCase()
-    return `#${result}`;
-  }
+const invertHex = hex => {
+  const removeHash = hex.split('').splice(1).join('')
+  const result = (Number(`0x1${removeHash}`) ^ 0xFFFFFF).toString(16).substr(1).toUpperCase()
+  return `#${result}`;
+}
